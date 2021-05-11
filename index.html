@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Manipulating the DOM</title>
+    <!-- Load Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Fira+Sans:900|Merriweather&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Load Styles -->
+    <link href="css/styles.css" rel="stylesheet" />
+  </head>
+  <body>
+    <!-- HTML Follows BEM naming conventions 
+  IDs are only used for sections to connect menu achors to sections -->
+    <header class="page__header">
+      <nav class="navbar__menu">
+        <button id="btn">Add sections</button>
+        <!-- Navigation starts as empty UL that will be populated with JS -->
+        <ul id="navbar__list"></ul>
+      </nav>
+    </header>
+    <main>
+      <header class="main__hero">
+        <h1>Landing Page</h1>
+      </header>
+      <!-- Each Section has an ID (used for the anchor) and 
+    a data attribute that will populate the li node.
+    Adding more sections will automatically populate nav.
+    The first section is set to active class by default -->
+
+      <!------- I removed static sections from HTML to add them dynamically by using javascript ----->
+    </main>
+
+    <footer class="page__footer">
+      <p>&copy Udacity</p>
+      <!--------- adding an icon to go to the top of the page it appears after 800px down ------------>
+      <div id="to-top">TOP</div>
+    </footer>
+    <script src="js/app.js"></script>
+  </body>
+</html>
