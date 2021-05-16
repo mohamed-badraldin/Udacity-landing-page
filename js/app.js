@@ -5,9 +5,9 @@
  */
 // counter to specify attributes and number of section
 let counter = 0;
-const createSection = (_) => {
+const createSection = () => {
   counter++;
-  const content = `<section id="section${counter}" data-nav="Section ${counter}" >
+  const content = `<section id="section${counter}" data-nav="Section ${counter}">
     <div class="landing__container">
     <h2>Section ${counter}</h2>
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi fermentum metus faucibus lectus pharetra dapibus. Suspendisse potenti. Aenean aliquam elementum mi, ac euismod augue. Donec eget lacinia ex. Phasellus imperdiet porta orci eget mollis. Sed convallis sollicitudin mauris ac tincidunt. Donec bibendum, nulla eget bibendum consectetur, sem nisi aliquam leo, ut pulvinar quam nunc eu augue. Pellentesque maximus imperdiet elit a pharetra. Duis lectus mi, aliquam in mi quis, aliquam porttitor lacus. Morbi a tincidunt felis. Sed leo nunc, pharetra et elementum non, faucibus vitae elit. Integer nec libero venenatis libero ultricies molestie semper in tellus. Sed congue et odio sed euismod.</p>
@@ -38,32 +38,51 @@ const createNavItems = () => {
  *  edit the hash of location manual cause i prevent default behavior
  *  remove active classes
  */
-const observingSections = () => {
-  const observer = new IntersectionObserver(
-    function (entries) {
-      entries.forEach((entry) => {
-        let activeLink = navBar.querySelector(`[data-nav=${entry.target.id}]`);
-        if (entry.isIntersecting) {
-          entry.target.classList.add("your-active-class");
-          activeLink.classList.add("active-link");
-          location.hash = `${entry.target.id}`;
-        } else {
-          entry.target.classList.remove("your-active-class");
-          activeLink.classList.remove("active-link");
-        }
-      });
-    },
-    // options //
-    {
-      threshold: 0.7,
-      rootMargin: "50px",
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// const observingSections = () => {
+//   const observer = new IntersectionObserver(
+//     function (entries) {
+//       entries.forEach((entry) => {
+//         console.log(entry)
+//         let activeLink = navBar.querySelector(`[data-nav=${entry.target.id}]`);
+//         if (entry.isIntersecting) {
+//           entry.target.classList.add("your-active-class");
+//           activeLink.classList.add("active-link");
+//           location.hash = `${entry.target.id}`;
+//         } else {
+//           entry.target.classList.remove("your-active-class");
+//           activeLink.classList.remove("active-link");
+//         }
+//       });
+//     },
+//     // options //
+//     {
+//       threshold: 0.5
+//     }
+//   );
+
+///////// using Element.getBoundingClientRect() instead of Intersection Observer API ///////////////////
+window.onscroll = function() {
+	document.querySelectorAll("section").forEach(function(active) {
+    let activeLink = navBar.querySelector(`[data-nav=${active.id}]`);
+	if(active.getBoundingClientRect().top >= -400 && active.getBoundingClientRect().top <= 150){
+
+    active.classList.add("your-active-class");
+    activeLink.classList.add("active-link");
+
     }
-  );
-  // return this part of code because I will use it twice //
-  return document.querySelectorAll("section").forEach((section) => {
-    observer.observe(section);
-  });
-};
+    else{
+         active.classList.remove("your-active-class");
+         activeLink.classList.remove("active-link");
+    }
+	});
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//   // return this part of code because I will use it twice //
+//   return document.querySelectorAll("section").forEach((section) => {
+//     observer.observe(section);
+//   });
+// };
 /**
  * when you click on nav links will go smoothly to the correct section
  * i can shortcut this code just using CSS (html{ scroll-behavior: "smooth"})
@@ -76,7 +95,7 @@ navBar.addEventListener("click", (event) => {
     document
       .getElementById(`${event.target.dataset.nav}`)
       .scrollIntoView({ behavior: "smooth" });
-    setTimeout((_) => {
+    setTimeout(() => {
       location.hash = `${event.target.dataset.nav}`;
     }, 200);
   }
@@ -89,13 +108,13 @@ navBar.addEventListener("click", (event) => {
  */
 for (let i = 1; i < 5; i++) createSection();
 createNavItems();
-observingSections();
+// observingSections();
 
 // creating more sections by click on the button
-document.getElementById("btn").addEventListener("click", (_) => {
+document.getElementById("btn").addEventListener("click", () => {
   createSection();
   createNavItems();
-  observingSections();
+  // observingSections();
 });
 // save the icon used to go to the top and the header in variables
 const toTop = document.getElementById("to-top");
@@ -109,13 +128,20 @@ toTop.addEventListener("click", () => {
  * disappear the header after 8 seconds and appear again when scrolling.
  * appearing the icon(to-top) after 800px to down
  */
+let isScrolling;
 document.onscroll = () => {
-  header.style.display = "block";
-  setTimeout(() => {
+  header.style.display = "block"
+  clearTimeout(isScrolling)
+   isScrolling = setTimeout(() => {
     header.style.display = "none";
-  }, 8000);
+  }, 4000);
 
   window.scrollY > 800
     ? (toTop.style.display = "block")
     : (toTop.style.display = "none");
 };
+
+
+
+
+

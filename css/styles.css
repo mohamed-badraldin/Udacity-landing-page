@@ -279,8 +279,8 @@ section.your-active-class .landing__container::after {
   text-align: center;
   line-height: 47px;
   position: fixed;
-  top: 94%;
-  left: 88%;
+  bottom: -6px;
+  right: 20px;
   cursor: pointer;
-  display: block;
+  /* display: none; */
 }
